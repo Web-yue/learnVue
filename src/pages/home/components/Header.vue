@@ -15,6 +15,7 @@
      data(){
       return {
         aa:1000,
+        cc:'ccc',
         dd:1234567
       }
      }
