@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-left"><span class="iconfont back-icon">&#xe617;</span></div>
     <div class="header-center">
-      <span class="iconfont">&#xe618;</span>  <input placeholder="请输入名称" :value="dd"  type="text">
+      <span class="iconfont">&#xe618;</span>  <input placeholder="请输入名称" :value="aa"  type="text">
     </div>
 
     <div class="header-right"><span class="iconfont">&#xe600;</span></div>
@@ -14,6 +14,7 @@
     name: "Header",
      data(){
       return {
+        aa:1000,
         dd:1234567
       }
      }
