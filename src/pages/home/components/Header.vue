@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-left"><span class="iconfont back-icon">&#xe617;</span></div>
     <div class="header-center">
-      <span class="iconfont">&#xe618;</span>  <input placeholder="请输入名称"  type="text">
+      <span class="iconfont">&#xe618;</span>  <input placeholder="请输入名称" :value="dd"  type="text">
     </div>
 
     <div class="header-right"><span class="iconfont">&#xe600;</span></div>
@@ -11,7 +11,12 @@
 
 <script>
   export default {
-    name: "Header"
+    name: "Header",
+     data(){
+      return {
+        dd:123
+      }
+     }
   }
 </script>
 
