@@ -14,7 +14,7 @@
     name: "Header",
      data(){
       return {
-        aa:1000,
+        aa:'test',
         dd:1234567
       }
      }
