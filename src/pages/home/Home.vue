@@ -1,8 +1,8 @@
 <template>
     <div>
-      <Header></Header>
-      <Swiper></Swiper>
-      <Icons></Icons>
+      <Header :city="city"></Header>
+      <Swiper :swiperArr="swiperArr"></Swiper>
+      <Icons :iconsArr="iconsArr"></Icons>
      </div>
 </template>
 
@@ -16,11 +16,26 @@
     components:{
       Header,Swiper,Icons
       },
+    data(){
+      return {
+        city:'',
+        swiperArr:[],
+        iconsArr:[]
+      }
+    },
       created() {
           axios.get('/api/data.json').then(res=>{
             console.log(res)
+            if(res.data.res&&res.data.data){
+              const data=res.data.data;
+              this.city=data.city;
+              this.swiperArr=data.swiperArr;
+              this.iconsArr=data.iconsArr;
+
+            }
         }).catch(err=>{
           console.log(err)
+
           })
 
       }

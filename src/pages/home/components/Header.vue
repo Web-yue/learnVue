@@ -2,22 +2,29 @@
   <div class="header">
     <div class="header-left"><span class="iconfont back-icon">&#xe617;</span></div>
     <div class="header-center">
-      <span class="iconfont">&#xe618;</span>  <input placeholder="请输入名称" :value="aa"  type="text">
+      <span class="iconfont">&#xe618;</span> <input placeholder="请输入名称" :value="aa" type="text">
     </div>
 
-    <div class="header-right"><span class="iconfont">&#xe600;</span></div>
+
+    <router-link to="/hh">
+      <div class="header-right"> {{city}} <span class="iconfont"> &#xe600;</span></div>
+
+    </router-link>
   </div>
 </template>
 
 <script>
   export default {
     name: "Header",
-     data(){
+    data() {
       return {
-        aa:'test111',
-        dd:1234567
+        aa: 'test111',
+        dd: 1234567
       }
-     }
+    },
+    props: {
+      city: String
+    }
   }
 </script>
 
@@ -46,7 +53,14 @@
         width .4rem
       input
         flex 1
+        font-size .36rem
         border none
     .header-right
-      width .64rem
+        margin-right .1rem
+        color white
+        span
+          height .4rem
+          line-height .4rem
+
+
 </style>
