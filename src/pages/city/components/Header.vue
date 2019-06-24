@@ -1,60 +1,24 @@
 <template>
   <div class="header">
     <div class="header-top">
-      <p><span class="iconfont back-icon">&#xe617;</span>城市选择</p>
+      <p><router-link to="/"><span class="iconfont back-icon">&#xe617;</span></router-link> 城市选择</p>
       <div><input type="text" placeholder="请输入城市名或拼音"></div>
     </div>
     <div class="header-bottom" ref="wrapper">
       <div class="content">
         <h4>当前城市</h4>
         <ul>
-          <li>北京</li>
+          <li>{{nowCity}}</li>
         </ul>
         <h4>热门城市</h4>
-        <ul>
-          <li>北京</li>
-          <li>上海三亚</li>
-          <li>北京</li>
-          <li>上海三亚</li>
-          <li>北京</li>
-          <li>上海三亚</li>
-          <li>北京</li>
-          <li>上海三亚</li>
-          <li>北京</li>
-          <li>上海三亚</li>
+        <ul >
+          <li v-for="(item,index) in hotCity" :key="index">{{item}}</li>
+
         </ul>
-        <div class="cityList" ref="dd">
-          <h4>当前城市</h4>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
-          <p>北京</p>
+        <div class="cityList" ref="dd" v-for="(item , index) in cityList" :key="index">
+          <h4 :ref="item.initial" >{{item.initial}}</h4>
+          <p v-for="(inItem,inIndex) in item.list" :key="inIndex">{{inItem.name}}</p>
+
         </div>
       </div>
 
@@ -68,8 +32,33 @@
 
   export default {
     name: "Header",
+    props:{
+      nowCity:String,
+      hotCity:Array,
+      cityList:Array,
+      zimu:String
+    },
     mounted() {
-      this.scroll = new BScroll(this.$refs.wrapper)
+      this.scroll = new BScroll(this.$refs.wrapper);
+
+    },
+    beforeUpdate(){
+      let arr=[];
+      this.cityList.forEach((e,i)=>{
+        arr.push(e.initial);
+       });
+       this.$emit('cityLetter',arr);
+
+    },
+    watch:{
+      zimu(newVal,oldVal){
+        // console.log(this.$refs.B)
+        if(newVal!=''){
+          this.scroll.scrollToElement(this.$refs[newVal][0])
+        }
+        // console.log(newVal)
+        // console.log(oldVal)
+      }
     }
   }
 </script>
