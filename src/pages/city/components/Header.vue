@@ -17,7 +17,7 @@
       <div class="content">
         <h4>当前城市</h4>
         <ul>
-          <li>{{this.$store.state.city}}</li>
+          <li>{{this.currentCity}}</li>
         </ul>
         <h4>热门城市</h4>
         <ul>
@@ -38,7 +38,7 @@
 
 <script>
   import BScroll from 'better-scroll'
-
+  import { mapState ,mapMutations } from 'vuex'
   export default {
     name: "Header",
     data() {
@@ -50,9 +50,12 @@
     },
     methods: {
       handleCityClick(name) {
-        this.$store.commit('changeCity', name);//向vuex store 传递数据
+        // this.$store.commit('changeCity', name);//向vuex store 传递数据 方法1
+        this.changeCity(name); // 方法2
+        localStorage.setItem('city',name);
         this.$router.push('/')//编程式方式改变路由
-      }
+      },
+      ...mapMutations(['changeCity']) // 方法2
     },
     props: {
       hotCity: Array,
@@ -62,7 +65,11 @@
     computed: {
       hasNoData() {
         return !this.result.length
-      }
+      },
+      ...mapState({
+        currentCity:'city'
+      })
+
     },
 
     mounted() {
