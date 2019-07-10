@@ -3,14 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
- import '@/assets/css/reset.css'
+import store from './store/index'
+import '@/assets/css/reset.css'
 import '@/assets/css/iconfont.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 // require styles
 import 'swiper/dist/css/swiper.css'
 
-Vue.use(VueAwesomeSwiper, /* { default global options } */)
+Vue.use(VueAwesomeSwiper, /* { default global options } */);
 
 
 Vue.config.productionTip = false;
@@ -18,7 +19,8 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>'
-})
+});

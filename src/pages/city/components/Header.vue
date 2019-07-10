@@ -9,7 +9,7 @@
     </div>
     <div class="search-result" ref="searchbox" v-show="searchText">
       <ul>
-        <li v-for="item of result">{{item.name}}</li>
+        <li v-for="item of result" @click="handleCityClick(item.name)">{{item.name}}</li>
         <li v-show="hasNoData">没有找到匹配城市</li>
       </ul>
     </div>
@@ -17,16 +17,19 @@
       <div class="content">
         <h4>当前城市</h4>
         <ul>
-          <li>{{nowCity}}</li>
+          <li>{{this.$store.state.city}}</li>
         </ul>
         <h4>热门城市</h4>
         <ul>
-          <li v-for="(item,index) in hotCity" :key="index">{{item}}</li>
+          <li v-for="(item,index) in hotCity" :key="index" @click="handleCityClick(item)">
+            {{item}}
+          </li>
 
         </ul>
         <div class="cityList" ref="dd" v-for="(item , index) in cityList" :key="index">
           <h4 :ref="item.initial">{{item.initial}}</h4>
-          <p v-for="(inItem,inIndex) in item.list" :key="inIndex">{{inItem.name}}</p>
+          <p v-for="(inItem,inIndex) in item.list" :key="inIndex" @click="handleCityClick(inItem.name)">
+            {{inItem.name}}</p>
         </div>
       </div>
     </div>
@@ -45,8 +48,13 @@
         timer: null
       }
     },
+    methods: {
+      handleCityClick(name) {
+        this.$store.commit('changeCity', name);//向vuex store 传递数据
+        this.$router.push('/')//编程式方式改变路由
+      }
+    },
     props: {
-      nowCity: String,
       hotCity: Array,
       cityList: Array,
       zimu: String
@@ -55,12 +63,11 @@
       hasNoData() {
         return !this.result.length
       }
-
     },
-    mounted() {
-      this.scroll = new BScroll(this.$refs.wrapper);
-      new BScroll(this.$refs.searchbox);
 
+    mounted() {
+      this.scroll = new BScroll(this.$refs.wrapper, {click: true});
+      new BScroll(this.$refs.searchbox, {click: true});
     },
 
     beforeUpdate() {
@@ -69,13 +76,13 @@
         arr.push(e.initial);
       });
       this.$emit('cityLetter', arr);
-
     },
 
     watch: {
       zimu(newVal, oldVal) {
         if (newVal != '') {
-          this.scroll.scrollToElement(this.$refs[newVal][0])
+          this.scroll.scrollToElement(this.$refs[newVal][0]);
+          return
         }
       },
       searchText(newVal) {

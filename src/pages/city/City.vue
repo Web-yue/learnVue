@@ -1,6 +1,6 @@
 <template>
   <div class="city">
-    <Header @cityLetter="showData" :zimu="zimu" :hotCity="hotCity" :nowCity="nowCity" :cityList="cityList"></Header>
+    <Header @cityLetter="showData" :zimu="zimu" :hotCity="hotCity"   :cityList="cityList"></Header>
     <Citynav @zimu="getZimu" :cityLetter="cityLetter"></Citynav>
   </div>
 </template>
@@ -14,7 +14,7 @@
     name: "City",
     data(){
       return{
-        nowCity:'',
+
         hotCity:[],
         cityList:[],
         cityLetter:[],
@@ -36,7 +36,6 @@
     mounted() {
       axios.get('/api/city.json').then(res => {
         const data=res.data;
-        this.nowCity=data.nowCity;
         this.hotCity=data.hotCity;
         this.cityList=data.cityList
       }).catch(e=>{
