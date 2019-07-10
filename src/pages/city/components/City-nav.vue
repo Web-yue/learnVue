@@ -1,7 +1,14 @@
 <template>
   <div class="cityNav">
     <ul @click="postData">
-      <li v-for="(item,index) in cityLetter" v-bind:class="{selected:index==current}" @click="sss(index)" :key="index">
+      <li v-for="(item,index) in cityLetter"
+          v-bind:class="{selected:index==current}"
+          :ref="item"
+          @click="sss(index)" :key="index"
+          @touchstart="bindTouchStart"
+          @touchmove="bindTouchMove"
+          @touchend="bindTouchEnd"
+      >
         {{item}}
       </li>
     </ul>
@@ -13,8 +20,14 @@
     name: "City-nav",
     data() {
       return {
-        current: 0
+        current: 0,
+        touchState:false,
+        offsetVal:0,
+        timer:null
       }
+    },
+    updated(){
+      this.offsetVal=this.$refs['A'][0].offsetTop;
     },
     props: {
       cityLetter: Array
@@ -23,11 +36,30 @@
       postData(e) {
         let letter = e.target.innerText;
         if (letter.length === 1) {
-          // console.log(letter)
-
-          this.$emit('zimu', letter)
+           this.$emit('zimu', letter)
         }
 
+      },
+
+      bindTouchStart(e){
+        this.touchState=true
+      },
+      bindTouchMove(e){
+        if(this.touchState){
+          if(this.timer){
+            clearTimeout(this.timer)
+          }
+          this.timer=setTimeout(()=> {
+            const index=Math.floor((e.touches[0].clientY-this.offsetVal-80)/20);
+            if(index>=0&&index<this.cityLetter.length){
+              this.$emit('zimu', this.cityLetter[index]);
+              this.current=index;
+            }
+          },16)
+        }
+      },
+      bindTouchEnd(){
+        this.touchState=false
       },
 
       sss(a) {
@@ -63,7 +95,6 @@
       color $bgColor
 
       li
-
         width 100%
         line-height .4rem
         text-align center
